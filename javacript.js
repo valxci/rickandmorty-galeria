@@ -1,5 +1,6 @@
 const galeria = document.querySelector("#galeria");
 
+
 function createPost(name, message, imageURL, index) {
   const div = document.createElement("div");
   div.classList.add("digimon");
@@ -11,9 +12,8 @@ function createPost(name, message, imageURL, index) {
   elemento.src = imageURL;
   
   const mensaje = document.createElement("p");
-  mensaje.innerText = Este personaje es mi personaje  ${index};
- 
-
+  mensaje.textContent = `Este es el personaje ${index}`;
+  
   
   div.append(elemento, nombre, mensaje, );
   return div;
@@ -21,15 +21,16 @@ function createPost(name, message, imageURL, index) {
 
 
 for (let index = 1; index <= 826; index++) {
-  fetch (https://rickandmortyapi.com/api/character/${index})
+  fetch(`https://rickandmortyapi.com/api/character/${index}`)
     .then(response => response.json())
     .then(personaje => {
       const post = createPost(
-        Personaje ${index}: ${personaje.name},
-        Especie: ${personaje.species} | Origen: ${personaje.origin.name},
-        personaje.image, index
+        `Personaje ${index}: ${personaje.name}`,
+        `Especie: ${personaje.species} | Origen: ${personaje.origin.name}`,
+        personaje.image,index
       );
       galeria.appendChild(post);
     })
-  
+    .catch(error => console.error(`Error cargando personaje ${index}:`, error));
 }
+
